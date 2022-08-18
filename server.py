@@ -13,23 +13,30 @@ random.shuffle(chunks)
 
 
 async def handle_client(reader, writer):
-    print("connected")
+    print("Connected...")
+
     gen = (index.to_bytes(1, byteorder="big") + chunk for index, chunk in chunks)
+
     while True:
         data = await reader.read(1024)
+
         if not data:
             break
+
         if data.replace(b"\n", b"") != b"next":
             writer.close()
             break
+
         try:
             data = next(gen)
         except StopIteration:
             writer.close()
             break
+
         writer.write(data)
         await writer.drain()
-    print("disconnected")
+
+    print("...Disconnected")
 
 
 async def server():

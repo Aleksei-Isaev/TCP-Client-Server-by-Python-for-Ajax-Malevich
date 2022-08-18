@@ -1,2 +1,3 @@
-PySide2==5.13.2
+PySide2
 shiboken2==5.13.2
+contextvars
